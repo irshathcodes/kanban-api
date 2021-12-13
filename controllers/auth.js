@@ -22,7 +22,7 @@ const register = async (req, res) => {
 
 	res
 		.status(statusCodes.CREATED)
-		.json({ msg: "User Registered Successfully", token });
+		.json({ msg: "User Registered Successfully", token, name: user.name });
 };
 
 const login = async (req, res) => {
