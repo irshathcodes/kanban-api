@@ -10,6 +10,8 @@ const xss = require("xss-clean");
 const helmet = require("helmet");
 const cors = require("cors");
 
+app.set("trust proxy", 1);
+
 app.use(helmet()); // secures http headers.
 app.use(cors()); // enables to access this api from different domains.
 app.use(express.json()); // pulls json data from req.body, only if the content type is application/json.
