@@ -19,6 +19,9 @@ app.use(xss()); // Takes care of cross site scripting attacks.
 
 // Routes
 
+app.get("/", (req, res) => {
+	res.send("<h1> Todo List Api </h1>");
+});
 // Auth Route
 const authRoute = require("./routes/auth");
 app.use("/api/auth", authRoute);
