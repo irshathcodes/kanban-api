@@ -44,10 +44,10 @@ const updateTodo = async (req, res) => {
 		body: { todoName, completed },
 	} = req;
 
-	if (!todoName || !completed) {
+	if (!todoName && !completed) {
 		throw new CustomApiError(
 			statusCodes.BAD_REQUEST,
-			"All fields are required"
+			"you have sent a empty request!!"
 		);
 	}
 
