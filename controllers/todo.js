@@ -44,12 +44,12 @@ const updateTodo = async (req, res) => {
 		body: { todoName, completed },
 	} = req;
 
-	if (!todoName && !completed) {
-		throw new CustomApiError(
-			statusCodes.BAD_REQUEST,
-			"you have sent a empty request!!"
-		);
-	}
+	// if (!todoName && !completed) {
+	// 	throw new CustomApiError(
+	// 		statusCodes.BAD_REQUEST,
+	// 		"you have sent a empty request!!"
+	// 	);
+	// }
 
 	const todo = await Todo.findOneAndUpdate(
 		{ _id: todoId, createdUserId: userId },
