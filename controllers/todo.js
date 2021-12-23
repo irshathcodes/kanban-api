@@ -41,15 +41,7 @@ const updateTodo = async (req, res) => {
 	const {
 		user: { userId },
 		params: { id: todoId },
-		body: { todoName, completed },
 	} = req;
-
-	// if (!todoName && !completed) {
-	// 	throw new CustomApiError(
-	// 		statusCodes.BAD_REQUEST,
-	// 		"you have sent a empty request!!"
-	// 	);
-	// }
 
 	const todo = await Todo.findOneAndUpdate(
 		{ _id: todoId, createdUserId: userId },
@@ -91,6 +83,13 @@ const deleteTodo = async (req, res) => {
 	res.status(statusCodes.OK).json({ msg: "Todo deleted successfully" });
 };
 
+const deleteAllTodo = async (req, res) => {
+	const { userId } = req.user;
+	const todo = await Todo.deleteMany({ createdUserId: userId });
+
+	res.status(200).json({ msg: "Deleted All Todos" });
+};
+
 const deleteAccount = async (req, res) => {
 	const { userId } = req.user;
 
@@ -109,4 +108,5 @@ module.exports = {
 	updateTodo,
 	deleteTodo,
 	deleteAccount,
+	deleteAllTodo,
 };

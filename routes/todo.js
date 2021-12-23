@@ -7,9 +7,10 @@ const {
 	updateTodo,
 	deleteTodo,
 	deleteAccount,
+	deleteAllTodo,
 } = require("../controllers/todo");
 
-Router.route("/").get(getAllTodo).post(createTodo);
+Router.route("/").get(getAllTodo).post(createTodo).delete(deleteAllTodo);
 Router.route("/:id").get(getSingleTodo).patch(updateTodo).delete(deleteTodo);
 Router.delete("/user/deleteAccount", deleteAccount);
 
