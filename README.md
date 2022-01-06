@@ -9,11 +9,14 @@
 
 ## API Reference
 
-#### Register User
+## Register User
+
+ method: POST
 
 ```http
-  POST https://todo-list-crud-api.herokuapp.com/api/auth/register
+https://todo-list-crud-api.herokuapp.com/api/auth/register
 ```
+
 #### request body
   {
     "name" : "your name",
@@ -24,10 +27,12 @@
 &nbsp;
 
 
-#### Login User
+## Login User
+
+method: POST
 
 ```http
-  POST https://todo-list-crud-api.herokuapp.com/api/auth/login
+https://todo-list-crud-api.herokuapp.com/api/auth/login
 ```
 
 #### request body
@@ -53,18 +58,22 @@ headers: {
 &nbsp;
 
 
-#### Get All Todo
+## Get All Todo
+
+method: GET
 
 ```http
-  GET https://todo-list-crud-api.herokuapp.com/api/todo
+https://todo-list-crud-api.herokuapp.com/api/todo
 ```
 
 &nbsp;
 
 #### Create Todo
 
+method: POST
+
 ```http
-  POST https://todo-list-crud-api.herokuapp.com/api/todo
+https://todo-list-crud-api.herokuapp.com/api/todo
 ```
  #### request body 
   {
@@ -74,10 +83,12 @@ headers: {
 &nbsp;
 
 
-#### Update Todo
+## Update Todo
+
+method: PATCH
 
 ```http
-  PATCH https://todo-list-crud-api.herokuapp.com/api/todo/todoId
+https://todo-list-crud-api.herokuapp.com/api/todo/todoId
 
 ```
 #### request body
@@ -94,10 +105,12 @@ headers: {
 
 &nbsp;
 
-#### Delete Single Todo
+## Delete Single Todo
+
+method: DELETE
 
 ```http
-  DELETE https://todo-list-crud-api.herokuapp.com/api/todo/{todoId}
+https://todo-list-crud-api.herokuapp.com/api/todo/{todoId}
 ```
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -106,16 +119,20 @@ headers: {
 
 &nbsp;
 
-#### Delete All Todo
+## Delete All Todo
+
+method: DELETE
 
 ```http
-  DELETE https://todo-list-crud-api.herokuapp.com/api/todo
+https://todo-list-crud-api.herokuapp.com/api/todo
 ```
 
 &nbsp;
 
-#### Delete User and their data
+##  Delete User and their data
+
+method: DELETE
 
 ```http
-  DELETE https://todo-list-crud-api.herokuapp.com/api/todo/user/deleteAccount
+https://todo-list-crud-api.herokuapp.com/api/todo/user/deleteAccount
 ```
