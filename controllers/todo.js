@@ -4,16 +4,14 @@ const Todo = require("../db/model/Todo");
 const { CustomApiError, statusCodes } = require("../errors/CustomApiError");
 
 const getAllTodo = async (req, res) => {
-	const todo = await Todo.find({ createdUserId: req.user.userId }).sort(
-		"createdAt"
-	);
+	const todo = await Todo.find({ userId: req.user.userId }).sort("createdAt");
 
 	res.status(statusCodes.OK).json({ todo, count: todo.length });
 };
 
 const createTodo = async (req, res) => {
 	const { userId, name } = req.user;
-	(req.body.createdUserId = userId), (req.body.createdUsername = name);
+	(req.body.userId = userId), (req.body.userName = name);
 
 	const todo = await Todo.create(req.body);
 
@@ -25,7 +23,7 @@ const createTodo = async (req, res) => {
 const getSingleTodo = async (req, res) => {
 	const todo = await Todo.findOne({
 		_id: req.params.id,
-		createdUserId: req.user.userId,
+		userId: req.user.userId,
 	});
 
 	if (!todo) {
@@ -44,7 +42,7 @@ const updateTodo = async (req, res) => {
 	} = req;
 
 	const todo = await Todo.findOneAndUpdate(
-		{ _id: todoId, createdUserId: userId },
+		{ _id: todoId, userId: userId },
 		req.body,
 		{
 			new: true,
@@ -70,7 +68,7 @@ const deleteTodo = async (req, res) => {
 
 	const todo = await Todo.findOneAndDelete({
 		_id: todoId,
-		createdUserId: userId,
+		userId: userId,
 	});
 
 	if (!todo) {
@@ -85,16 +83,22 @@ const deleteTodo = async (req, res) => {
 
 const deleteAllTodo = async (req, res) => {
 	const { userId } = req.user;
-	const todo = await Todo.deleteMany({ createdUserId: userId });
+	await Todo.deleteMany({ userId: userId });
 
 	res.status(200).json({ msg: "Deleted All Todos" });
+};
+
+const getAllBoards = async (req, res) => {
+	const boards = await Todo.find().distinct("kanbanBoard");
+
+	res.status(200).json({ boards });
 };
 
 const deleteAccount = async (req, res) => {
 	const { userId } = req.user;
 
-	const deleteUser = await User.findOneAndDelete({ _id: userId });
-	const deleteUserTodo = await Todo.deleteMany({ createdUserId: userId });
+	await User.findOneAndDelete({ _id: userId });
+	await Todo.deleteMany({ userId: userId });
 
 	res
 		.status(statusCodes.OK)
@@ -109,4 +113,5 @@ module.exports = {
 	deleteTodo,
 	deleteAccount,
 	deleteAllTodo,
+	getAllBoards,
 };

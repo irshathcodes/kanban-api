@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 
+const SubTaskSchema = new mongoose.Schema({
+	driver: mongoose.ObjectId,
+	subTask: {
+		type: String,
+	},
+	completed: {
+		type: Boolean,
+		default: false,
+	},
+});
+
 const TodoSchema = new mongoose.Schema(
 	{
 		todoName: {
@@ -11,12 +22,26 @@ const TodoSchema = new mongoose.Schema(
 			required: true,
 			default: false,
 		},
-		createdUserId: {
+		status: {
+			type: String,
+			default: "todo",
+			enum: ["todo", "doing", "done"],
+		},
+		description: {
+			type: String,
+			required: true,
+		},
+		kanbanBoard: {
+			type: String,
+			required: true,
+		},
+		subTasks: [SubTaskSchema],
+		userId: {
 			type: mongoose.Types.ObjectId,
 			ref: "User",
 			required: [true, "please provide the user id"],
 		},
-		createdUsername: {
+		userName: {
 			type: String,
 			ref: "User",
 			required: [true, "please provide the username"],
