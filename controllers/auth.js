@@ -1,4 +1,4 @@
-const User = require("../db/model/User");
+const User = require("../model/User");
 
 const { CustomApiError, statusCodes } = require("../errors/CustomApiError");
 const {

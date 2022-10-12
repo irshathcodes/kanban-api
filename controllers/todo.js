@@ -1,10 +1,20 @@
-const User = require("../db/model/User");
-const Todo = require("../db/model/Todo");
+const User = require("../model/User");
+const Todo = require("../model/Todo");
 
 const { CustomApiError, statusCodes } = require("../errors/CustomApiError");
 
 const getAllTodo = async (req, res) => {
-	const todo = await Todo.find({ userId: req.user.userId }).sort("createdAt");
+	const { board } = req.query;
+
+	const findObj = {
+		userId: req.user.userId,
+	};
+
+	if (board && typeof board === "string") {
+		findObj.kanbanBoard = board;
+	}
+
+	const todo = await Todo.find(findObj).sort("createdAt");
 
 	res.status(statusCodes.OK).json({ todo, count: todo.length });
 };
@@ -89,7 +99,9 @@ const deleteAllTodo = async (req, res) => {
 };
 
 const getAllBoards = async (req, res) => {
-	const boards = await Todo.find().distinct("kanbanBoard");
+	const boards = await Todo.find({ userId: req.user.userId }).distinct(
+		"kanbanBoard"
+	);
 
 	res.status(200).json({ boards });
 };
