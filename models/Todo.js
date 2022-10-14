@@ -41,11 +41,6 @@ const TodoSchema = new mongoose.Schema(
 			ref: "User",
 			required: [true, "please provide the user id"],
 		},
-		userName: {
-			type: String,
-			ref: "User",
-			required: [true, "please provide the username"],
-		},
 	},
 	{ timestamps: true }
 );
