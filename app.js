@@ -16,7 +16,7 @@ const cookieParser = require("cookie-parser");
 app.set("trust proxy", 1);
 
 app.use(helmet()); // secures http headers.
-app.use(cors()); // enables to access this api from different domains.
+app.use(cors({ origin: process.env.CLIENT_DOMAIN, credentials: true })); // only domains specified in "origin" can access this api.
 app.use(express.json()); // pulls json data from req.body, only if the content type is application/json.
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(mongoSanitize());
@@ -47,8 +47,13 @@ const errorHandlerMiddleware = require("./middlewares/errorHandler");
 app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5000;
+const localUrl = `http://localhost:${port}`;
 
 app.listen(port, async () => {
 	await connectDB(process.env.MONGO_URI);
-	console.log(`Server is Listening on port ${port}...`);
+	console.log(
+		`Server is Listening on ${
+			process.env.NODE_ENV === "development" ? localUrl : `${port}...`
+		}`
+	);
 });

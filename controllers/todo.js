@@ -6,10 +6,6 @@ const { CustomApiError, statusCodes } = require("../errors/CustomApiError");
 const getAllTodo = async (req, res) => {
 	const { board } = req.query;
 
-	console.log(req.user.userId);
-
-	console.log(req.user);
-
 	const findObj = {
 		userId: req.user.userId,
 	};

@@ -5,7 +5,11 @@ const Token = require("../models/Token");
 const removeCookies = require("../utils/removeCookies");
 const jwt = require("jsonwebtoken");
 
-const { createJWT, attachCookieToResponse } = require("../utils/jwt");
+const {
+	createJWT,
+	attachCookieToResponse,
+	isTokenValid,
+} = require("../utils/jwt");
 const sendEmail = require("../utils/sendEmail");
 
 async function register(req, res) {
@@ -148,37 +152,47 @@ async function login(req, res) {
 
 async function forgotPassword(req, res) {
 	const { email } = req.body;
+	const refreshToken = req?.signedCookies?.refreshToken;
 
-	removeCookies(res);
+	let userId;
+
+	if (refreshToken) {
+		const payload = isTokenValid(refreshToken);
+		userId = payload.userId;
+	}
 
 	if (!email) throw new CustomApiError(400, "please provide valid email");
+	const findUser = { email };
 
-	const user = await User.findOne({ email });
+	if (userId) {
+		findUser._id = userId;
+	}
 
-	if (user) {
-		const verificationToken = crypto.randomBytes(40).toString("hex");
+	const user = await User.findOne(findUser);
 
-		await sendEmail({
-			to: user.email,
-			subject: "Reset Password Link",
-			html: `<span> Click the link to reset the password </span> 
+	if (!user) {
+		throw new CustomApiError(404, `No user found with email ${email}`);
+	}
+
+	const verificationToken = crypto.randomBytes(40).toString("hex");
+	await sendEmail({
+		to: user.email,
+		subject: "Reset Password Link",
+		html: `<span> Click the link to reset the password </span>
 	<a href="${process.env.CLIENT_DOMAIN}/user/reset-password?email=${user.email}&token=${verificationToken}">Reset Password</a>
 	`,
-		});
+	});
 
-		user.verificationToken = verificationToken;
-		user.tokenExpiration = new Date(Date.now() + 1000 * 60 * 10);
+	user.verificationToken = verificationToken;
+	user.tokenExpiration = new Date(Date.now() + 1000 * 60 * 10);
 
-		await user.save();
-	}
+	await user.save();
 
 	res.status(200).json({ msg: "check your email for verification link" });
 }
 
 async function resetPassword(req, res) {
 	const { verificationToken, email, password } = req.body;
-
-	removeCookies(res);
 
 	if (!verificationToken || !email || !password)
 		throw new CustomApiError(400, "please provide all the required fields");
