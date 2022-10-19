@@ -49,6 +49,7 @@ async function register(req, res) {
 	res.cookie("verificationToken", verificationToken, {
 		httpOnly: true,
 		signed: true,
+		sameSite: "None",
 		secure: process.env.NODE_ENV === "production",
 		expires: new Date(Date.now() + 1000 * 60 * 10),
 	});
