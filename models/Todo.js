@@ -34,7 +34,6 @@ const TodoSchema = new mongoose.Schema(
 		kanbanBoard: {
 			type: String,
 			required: true,
-			unique: true,
 		},
 		subTasks: [SubTaskSchema],
 		userId: {
