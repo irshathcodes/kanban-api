@@ -29,7 +29,6 @@ const TodoSchema = new mongoose.Schema(
 		},
 		description: {
 			type: String,
-			required: true,
 		},
 		kanbanBoard: {
 			type: String,
