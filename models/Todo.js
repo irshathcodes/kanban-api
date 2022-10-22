@@ -15,7 +15,6 @@ const TodoSchema = new mongoose.Schema(
 	{
 		todoName: {
 			type: String,
-			required: [true, "please provide name of the todo"],
 		},
 		completed: {
 			type: Boolean,
