@@ -16,11 +16,7 @@ const TodoSchema = new mongoose.Schema(
 		todoName: {
 			type: String,
 		},
-		completed: {
-			type: Boolean,
-			required: true,
-			default: false,
-		},
+
 		status: {
 			type: String,
 			default: "todo",
