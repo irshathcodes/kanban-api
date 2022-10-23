@@ -1,4 +1,5 @@
 const Todo = require("../models/Todo");
+const KanbanBoard = require("../models/KanbanBoard");
 
 const { CustomApiError, statusCodes } = require("../errors/CustomApiError");
 
@@ -10,6 +11,12 @@ const getAllTodo = async (req, res) => {
 
 	if (board) {
 		findObj.kanbanBoard = board;
+	}
+
+	if (board === "first") {
+		const firstBoard = await KanbanBoard.findOne({ userId: req.user.userId });
+
+		findObj.kanbanBoard = firstBoard.board;
 	}
 
 	const todo = await Todo.find(findObj).sort("createdAt");
