@@ -3,9 +3,14 @@ const Todo = require("../models/Todo");
 const { CustomApiError, statusCodes } = require("../errors/CustomApiError");
 
 const getAllTodo = async (req, res) => {
+	const { board } = req.query;
 	const findObj = {
 		userId: req.user.userId,
 	};
+
+	if (board) {
+		findObj.kanbanBoard = board;
+	}
 
 	const todo = await Todo.find(findObj).sort("createdAt");
 
