@@ -35,6 +35,10 @@ const { authenticationMiddleware } = require("./middlewares/authentication");
 const todoRoute = require("./routes/todo");
 app.use("/api/todo", authenticationMiddleware, todoRoute);
 
+// Board Route
+const boardRoute = require("./routes/board");
+app.use("/api/board", authenticationMiddleware, boardRoute);
+
 // User route
 const userRoute = require("./routes/user");
 app.use("/api/user", authenticationMiddleware, userRoute);

@@ -1,18 +1,11 @@
-const User = require("../models/User");
 const Todo = require("../models/Todo");
 
 const { CustomApiError, statusCodes } = require("../errors/CustomApiError");
 
 const getAllTodo = async (req, res) => {
-	const { board } = req.query;
-
 	const findObj = {
 		userId: req.user.userId,
 	};
-
-	if (board && typeof board === "string") {
-		findObj.kanbanBoard = board;
-	}
 
 	const todo = await Todo.find(findObj).sort("createdAt");
 
@@ -21,9 +14,11 @@ const getAllTodo = async (req, res) => {
 
 const createTodo = async (req, res) => {
 	const { userId } = req.user;
-	req.body.userId = userId;
 
-	const todo = await Todo.create(req.body);
+	const todo = await Todo.create({
+		...req.body,
+		userId,
+	});
 
 	res
 		.status(statusCodes.CREATED)
@@ -98,32 +93,11 @@ const deleteAllTodo = async (req, res) => {
 	res.status(200).json({ msg: "Deleted All Todos" });
 };
 
-const getAllBoards = async (req, res) => {
-	const boards = await Todo.find({ userId: req.user.userId }).distinct(
-		"kanbanBoard"
-	);
-
-	res.status(200).json({ boards });
-};
-
-const deleteAccount = async (req, res) => {
-	const { userId } = req.user;
-
-	await User.findOneAndDelete({ _id: userId });
-	await Todo.deleteMany({ userId: userId });
-
-	res
-		.status(statusCodes.OK)
-		.json({ msg: "User and their data has been deleted successfully" });
-};
-
 module.exports = {
 	getAllTodo,
 	createTodo,
 	getSingleTodo,
 	updateTodo,
 	deleteTodo,
-	deleteAccount,
 	deleteAllTodo,
-	getAllBoards,
 };
