@@ -98,8 +98,6 @@ async function verifyUser(req, res) {
 async function login(req, res) {
 	const { email, password } = req.body;
 
-	removeCookies(res);
-
 	if (!email || !password) {
 		throw new CustomApiError(400, "All Fields are required");
 	}
