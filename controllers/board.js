@@ -38,7 +38,7 @@ const createBoard = async (req, res) => {
 
 const deleteBoard = async (req, res) => {
 	const { userId } = req.user;
-	const { board } = req.body;
+	const { board } = req.params;
 
 	if (!board) {
 		throw new CustomApiError(400, "'board' should be provided");

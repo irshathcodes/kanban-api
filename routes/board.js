@@ -7,6 +7,7 @@ const {
 	deleteBoard,
 } = require("../controllers/board");
 
-router.route("/").get(getAllBoards).post(createBoard).delete(deleteBoard);
+router.route("/").get(getAllBoards).post(createBoard);
+router.delete("/:board", deleteBoard);
 
 module.exports = router;
