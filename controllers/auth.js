@@ -92,7 +92,20 @@ async function verifyUser(req, res) {
 
 	await user.save();
 
-	res.status(200).json({ msg: "User Verified" });
+	const refreshToken = crypto.randomBytes(40).toString("hex");
+
+	const tokenDetails = {
+		refreshToken,
+		ip: req.ip,
+		userAgent: req.headers["user-agent"],
+		userId: user._id,
+	};
+
+	await Token.create(tokenDetails);
+
+	attachCookieToResponse({ res, userId: user._id, refreshToken });
+
+	res.status(200).json({ username: user.name });
 }
 
 async function login(req, res) {
