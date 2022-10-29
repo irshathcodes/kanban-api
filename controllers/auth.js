@@ -4,6 +4,12 @@ const crypto = require("crypto");
 const Token = require("../models/Token");
 const removeCookies = require("../utils/removeCookies");
 const jwt = require("jsonwebtoken");
+const {
+	uniqueNamesGenerator,
+	colors,
+	animals,
+	starWars,
+} = require("unique-names-generator");
 
 const {
 	createJWT,
@@ -162,6 +168,47 @@ async function login(req, res) {
 	res.status(200).json({ username: user.name });
 }
 
+async function guestLogin(req, res) {
+	let uniqueName = uniqueNamesGenerator({
+		dictionaries: [animals, colors, starWars],
+		length: 1,
+	});
+
+	const fakeDomain = "@kanbanboard.com";
+
+	let email = uniqueName.concat(fakeDomain);
+
+	const isGuestExist = await User.findOne({ email });
+	if (isGuestExist) {
+		uniqueName = uniqueName + Math.floor(Math.random() * 10);
+		email = uniqueName.concat(fakeDomain);
+	}
+
+	const prefix = "guest";
+	const guestName = prefix.concat("_", uniqueName);
+	const password = "HelloWorld@69";
+
+	const user = await User.create({
+		name: guestName,
+		email: email,
+		password,
+		isVerified: true,
+	});
+
+	const refreshToken = crypto.randomBytes(40).toString("hex");
+
+	const tokenDetails = {
+		refreshToken,
+		ip: req.ip,
+		userAgent: req.headers["user-agent"],
+		userId: user._id,
+	};
+
+	await Token.create(tokenDetails);
+
+	attachCookieToResponse({ res, userId: user._id, refreshToken });
+	res.status(200).json({ username: user.name });
+}
 async function forgotPassword(req, res) {
 	const { email } = req.body;
 	const refreshToken = req?.signedCookies?.refreshToken;
@@ -239,6 +286,7 @@ module.exports = {
 	register,
 	verifyUser,
 	login,
+	guestLogin,
 	forgotPassword,
 	resetPassword,
 	logout,
