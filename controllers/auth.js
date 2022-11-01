@@ -186,7 +186,7 @@ async function guestLogin(req, res) {
 
 	const prefix = "guest";
 	const guestName = prefix.concat("_", uniqueName);
-	const password = "HelloWorld@69";
+	const password = "HelloWorld@123";
 
 	const user = await User.create({
 		name: guestName,
