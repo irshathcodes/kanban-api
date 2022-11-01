@@ -124,17 +124,17 @@ async function login(req, res) {
 	const user = await User.findOne({ email });
 
 	if (!user) {
-		throw new CustomApiError(401, "Invalid Credentials");
+		throw new CustomApiError(400, "Invalid Credentials");
 	}
 
 	if (!user.isVerified) {
-		throw new CustomApiError(401, "User not verified!!");
+		throw new CustomApiError(400, "User not verified!!");
 	}
 
 	const isPasswordMatch = await user.comparePassword(password);
 
 	if (!isPasswordMatch) {
-		throw new CustomApiError(401, "Incorrect Password");
+		throw new CustomApiError(400, "Incorrect Password");
 	}
 
 	let refreshToken = "";
@@ -260,7 +260,7 @@ async function resetPassword(req, res) {
 	const currentDate = new Date();
 
 	if (user.tokenExpiration < currentDate) {
-		return res.status(401).json({ msg: "token expired" });
+		return res.status(400).json({ msg: "token expired" });
 	}
 
 	if (user && user.verificationToken === verificationToken) {
