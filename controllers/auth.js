@@ -211,23 +211,10 @@ async function guestLogin(req, res) {
 }
 async function forgotPassword(req, res) {
 	const { email } = req.body;
-	const refreshToken = req?.signedCookies?.refreshToken;
-
-	let userId;
-
-	if (refreshToken) {
-		const payload = isTokenValid(refreshToken);
-		userId = payload.userId;
-	}
 
 	if (!email) throw new CustomApiError(400, "please provide valid email");
-	const findUser = { email };
 
-	if (userId) {
-		findUser._id = userId;
-	}
-
-	const user = await User.findOne(findUser);
+	const user = await User.findOne({ email });
 
 	if (!user) {
 		throw new CustomApiError(404, `No user found with email ${email}`);
