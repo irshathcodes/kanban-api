@@ -1,5 +1,7 @@
 const Token = require("../models/Token");
 const User = require("../models/User");
+const KanbanBoard = require("../models/KanbanBoard");
+const removeCookies = require("../utils/removeCookies");
 
 async function getUsername(req, res) {
 	const { userId } = req.user;
@@ -15,7 +17,9 @@ const deleteAccount = async (req, res) => {
 	await User.findOneAndDelete({ _id: userId });
 	await Todo.deleteMany({ userId: userId });
 	await Token.deleteMany({ userId: userId });
+	await KanbanBoard.deleteMany({ userId: userId });
 
+	removeCookies();
 	res
 		.status(statusCodes.OK)
 		.json({ msg: "User and their data has been deleted successfully" });
