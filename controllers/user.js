@@ -3,6 +3,7 @@ const Todo = require("../models/Todo");
 const User = require("../models/User");
 const KanbanBoard = require("../models/KanbanBoard");
 const removeCookies = require("../utils/removeCookies");
+const statusCodes = require("../");
 
 async function getUsername(req, res) {
 	const { userId } = req.user;
@@ -22,7 +23,7 @@ const deleteAccount = async (req, res) => {
 
 	removeCookies(res);
 	res
-		.status(statusCodes.OK)
+		.status(200)
 		.json({ msg: "User and their data has been deleted successfully" });
 };
 
