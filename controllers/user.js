@@ -20,7 +20,7 @@ const deleteAccount = async (req, res) => {
 	await Token.deleteMany({ userId: userId });
 	await KanbanBoard.deleteMany({ userId: userId });
 
-	removeCookies();
+	removeCookies(res);
 	res
 		.status(statusCodes.OK)
 		.json({ msg: "User and their data has been deleted successfully" });
