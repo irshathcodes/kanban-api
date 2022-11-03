@@ -5,6 +5,6 @@ const { getUsername, deleteAccount } = require("../controllers/user");
 
 router.get("/", getUsername);
 
-router.delete("/deleteAccount", deleteAccount);
+router.delete("/delete-account", deleteAccount);
 
 module.exports = router;
