@@ -1,3 +1,4 @@
+const Token = require("../models/Token");
 const User = require("../models/User");
 
 async function getUsername(req, res) {
@@ -13,6 +14,7 @@ const deleteAccount = async (req, res) => {
 
 	await User.findOneAndDelete({ _id: userId });
 	await Todo.deleteMany({ userId: userId });
+	await Token.deleteMany({ userId: userId });
 
 	res
 		.status(statusCodes.OK)
