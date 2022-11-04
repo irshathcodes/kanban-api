@@ -207,7 +207,7 @@ async function guestLogin(req, res) {
 	await Token.create(tokenDetails);
 
 	attachCookieToResponse({ res, userId: user._id, refreshToken });
-	res.status(200).json({ username: user.name });
+	res.status(200).json({ username: user.name, guest: true });
 }
 async function forgotPassword(req, res) {
 	const { email } = req.body;
