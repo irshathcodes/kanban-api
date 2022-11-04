@@ -10,7 +10,12 @@ async function getUsername(req, res) {
 
 	const user = await User.findOne({ _id: userId });
 
-	res.status(200).json({ name: user.name });
+	const response = {
+		name: user.name,
+		userType: user.name.startsWith("guest") ? "guest" : "user",
+	};
+
+	res.status(200).json(response);
 }
 
 const deleteAccount = async (req, res) => {
