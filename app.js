@@ -38,7 +38,17 @@ app.use(xss()); // Takes care of cross site scripting attacks.
 
 // Routes
 app.get("/", (req, res) => {
-	res.send("<h1> Todo List Api </h1>");
+	const systemFont = `
+				font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+					Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+					sans-serif;`;
+
+	res.send(`
+	<main style="${systemFont}">	
+	<h1> Kanban Task Manager Api </h1> 		
+		<a href="/api-docs">Documentation</a>
+	</main>
+		`);
 });
 
 // api docs route
