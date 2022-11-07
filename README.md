@@ -1,138 +1,55 @@
- # Api for Todo List
- 
 
+# Kanban Api
 
-**Server:** Node, Express
+A simple task manager api to keep track of your day-to-day tasks and complete them.
 
-**Database:** MongoDB
-
-
-## API Reference
-
-## Register User
-
- method: POST
-
-```http
-https://todo-list-crud-api.herokuapp.com/api/auth/register
-```
-
-#### request body
-  {
-    "name" : "your name",
-    "email" : "name@gmail.com",
-    "password" : "secret"
-}
-
-&nbsp;
-
-
-## Login User
-
-method: POST
-
-```http
-https://todo-list-crud-api.herokuapp.com/api/auth/login
-```
-
-#### request body
-  {
-   "email" : "email@gmail.com",
-   "password" : "secret"
-   }
-
-&nbsp;
-
-**Note:** All the Requests Below should be sent along with JWT Token in authorization header. 
+link to production server: [kanban api](kanban-board-api.up.railway.app)
 
 
 
 
-You should include this for all requests.
-```
-headers: {
-    "Authorization" : "Bearer yourtoken",
-}
-```
+## Tech Stack
 
-&nbsp;
+Node, Express, MongoDB with Mongoose
 
 
-## Get All Todo
 
-method: GET
+## Documentation
 
-```http
-https://todo-list-crud-api.herokuapp.com/api/todo
-```
-
-&nbsp;
-
-#### Create Todo
-
-method: POST
-
-```http
-https://todo-list-crud-api.herokuapp.com/api/todo
-```
- #### request body 
-  {
-  "todoName" : "your todo"
-  }
-
-&nbsp;
+[Documentation](https://kanban-board-api.up.railway.app/api-docs/)
 
 
-## Update Todo
+## Features
 
-method: PATCH
-
-```http
-https://todo-list-crud-api.herokuapp.com/api/todo/todoId
-
-```
-#### request body
-  {
-  "todoName" : "your updated todo",
-  "completed" : true
-  }
+- HTTP only cookie based authentication
+- swagger api docs
+- flexible schema
 
 
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `todo ID` | `string` | **Required**. Todo ID |
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`JWT_SECRET` - strong random string
+
+`MONGO_URI` - mongodb connection string
+
+`CLIENT_DOMAIN`- your frontend app url(eg: http://127.0.0.1:3000)
+
+`COOKIE_SECRET` - strong random string
+
+`EMAIL_USERNAME`
+`EMAIL_PASSWORD` - your email credentials to send verification links
+
+`NODE_ENV` - development or production
 
 
-&nbsp;
+## License
 
-## Delete Single Todo
-
-method: DELETE
-
-```http
-https://todo-list-crud-api.herokuapp.com/api/todo/{todoId}
-```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `todo ID` | `string` | **Required**. Todo ID |
+[MIT](https://choosealicense.com/licenses/mit/)
 
 
-&nbsp;
+## Feedback
 
-## Delete All Todo
+If you have any feedback/suggestions, please reach out to me at [@irshathcodes](https://twitter.com/irshathcodes)
 
-method: DELETE
-
-```http
-https://todo-list-crud-api.herokuapp.com/api/todo
-```
-
-&nbsp;
-
-##  Delete User and their data
-
-method: DELETE
-
-```http
-https://todo-list-crud-api.herokuapp.com/api/todo/user/deleteAccount
-```
