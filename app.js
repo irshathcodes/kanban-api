@@ -10,7 +10,6 @@ const xss = require("xss-clean");
 const helmet = require("helmet");
 const cors = require("cors");
 const mongoSanitize = require("express-mongo-sanitize");
-
 const rateLimit = require("express-rate-limit");
 
 const limiter = rateLimit({
@@ -41,6 +40,13 @@ app.use(xss()); // Takes care of cross site scripting attacks.
 app.get("/", (req, res) => {
 	res.send("<h1> Todo List Api </h1>");
 });
+
+// api docs route
+const YAML = require("yamljs");
+const swaggerUI = require("swagger-ui-express");
+const swaggerDocument = YAML.load("./swagger.yaml");
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 // Auth Route
 const authRoute = require("./routes/auth");
 app.use("/api/auth", authRoute);

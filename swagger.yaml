@@ -1,0 +1,508 @@
+openapi: 3.0.0
+info:
+  title: Kanban Api
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://kanban-board-api.up.railway.app/api
+    variables: {}
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/LoginRequest"
+                - example:
+                    email: example@gmail.com
+                    password: HelloWorld@123
+            example:
+              email: example@gmail.com
+              password: HelloWorld@123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/RegisterRequest"
+                - example:
+                    name: jon snow
+                    email: jon@gmail.com
+                    password: HelloWorld@123
+            example:
+              name: jon snow
+              email: jon@gmail.com
+              password: HelloWorld@123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/verify-user:
+    post:
+      tags:
+        - Auth
+      summary: Verify User
+      operationId: VerifyUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/VerifyUserRequest"
+                - example:
+                    verificationOtp: 351917
+            example:
+              verificationOtp: 351917
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/forgot-password:
+    post:
+      tags:
+        - Auth
+      summary: Forgot Password
+      operationId: ForgotPassword
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/ForgotPasswordRequest"
+                - example:
+                    email: example@gmail.com
+            example:
+              email: example@gmail.com
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/reset-password:
+    post:
+      tags:
+        - Auth
+      summary: Reset Password
+      operationId: ResetPassword
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/ResetPasswordRequest"
+                - example:
+                    verificationToken: 370836b51b46ea9bdbd0a7e6dbd3f7a6b6280d90a1d2ffc50be568b051b9dbbcefa752d5c4dbbc63
+                    email: example@gmail.com
+                    password: HelloWorld@123
+            example:
+              verificationToken: 370836b51b46ea9bdbd0a7e6dbd3f7a6b6280d90a1d2ffc50be568b051b9dbbcefa752d5c4dbbc63
+              email: example@gmail.com
+              password: HelloWorld@123
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/logout:
+    delete:
+      tags:
+        - Auth
+      summary: Log out
+      operationId: Logout
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /auth/login/guest:
+    post:
+      tags:
+        - Auth
+      summary: Guest Login
+      operationId: GuestLogin
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /todo:
+    get:
+      tags:
+        - Tasks
+      summary: Get All Tasks
+      operationId: GetAllTasks
+      parameters:
+        - name: board
+          in: query
+          description: ""
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+            example: yourboard
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - Tasks
+      summary: Create Task
+      operationId: CreateTask
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateTaskRequest"
+                - example:
+                    todoName: learn javascript
+                    kanbanBoard: javascript
+                    description: learn more complex js topics
+                    subTasks:
+                      - subTask: learn es6
+                      - subTask: learn node
+            example:
+              todoName: learn javascript
+              kanbanBoard: javascript
+              description: learn more complex js topics
+              subTasks:
+                - subTask: learn es6
+                - subTask: learn node
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Tasks
+      summary: Delete All Tasks
+      operationId: DeleteAllTasks
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /todo/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The task ID
+    get:
+      tags:
+        - Tasks
+      summary: Get Single Task
+      operationId: GetSingleTask
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+        - Tasks
+      summary: Update Task
+      operationId: UpdateTask
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/UpdateTaskRequest"
+                - example:
+                    todoName: Youtube and Stuff
+                    status: doing
+            example:
+              todoName: Youtube and Stuff
+              status: doing
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - Tasks
+      summary: Delete Task
+      operationId: DeleteTask
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get Username
+      operationId: GetUsername
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /user/delete-account:
+    delete:
+      tags:
+        - User
+      summary: Delete User Account
+      operationId: DeleteUserAccount
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+  /board:
+    get:
+      tags:
+        - KanbanBoard
+      summary: Get All Boards
+      operationId: GetAllBoards
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+        - KanbanBoard
+      summary: Create Board
+      operationId: CreateBoard
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CreateBoardRequest"
+                - example:
+                    board: your board
+            example:
+              board: your board
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+        - KanbanBoard
+      summary: Delete Board
+      operationId: DeleteBoard
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    LoginRequest:
+      title: LoginRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: example@gmail.com
+        password: HelloWorld@123
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: jon snow
+        email: jon@gmail.com
+        password: HelloWorld@123
+    VerifyUserRequest:
+      title: VerifyUserRequest
+      required:
+        - verificationOtp
+      type: object
+      properties:
+        verificationOtp:
+          type: integer
+          format: int32
+      example:
+        verificationOtp: 351917
+    ForgotPasswordRequest:
+      title: ForgotPasswordRequest
+      required:
+        - email
+      type: object
+      properties:
+        email:
+          type: string
+      example:
+        email: example@gmail.com
+    ResetPasswordRequest:
+      title: ResetPasswordRequest
+      required:
+        - verificationToken
+        - email
+        - password
+      type: object
+      properties:
+        verificationToken:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        verificationToken: 370836b51b46ea9bdbd0a7e6dbd3f7a6b6280d90a1d2ffc50be568b051b9dbbcefa752d5c4dbbc63
+        email: example@gmail.com
+        password: HelloWorld@123
+    CreateTaskRequest:
+      title: CreateTaskRequest
+      required:
+        - todoName
+        - kanbanBoard
+        - description
+        - subTasks
+      type: object
+      properties:
+        todoName:
+          type: string
+        kanbanBoard:
+          type: string
+        description:
+          type: string
+        subTasks:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubTask"
+          description: ""
+      example:
+        todoName: learn javascript
+        kanbanBoard: javascript
+        description: learn more complex js topics
+        subTasks:
+          - subTask: learn es6
+          - subTask: learn node
+    SubTask:
+      title: SubTask
+      required:
+        - subTask
+      type: object
+      properties:
+        subTask:
+          type: string
+      example:
+        subTask: learn es6
+    UpdateTaskRequest:
+      title: UpdateTaskRequest
+      required:
+        - todoName
+        - status
+      type: object
+      properties:
+        todoName:
+          type: string
+        status:
+          type: string
+      example:
+        todoName: Youtube and Stuff
+        status: doing
+    CreateBoardRequest:
+      title: CreateBoardRequest
+      required:
+        - board
+      type: object
+      properties:
+        board:
+          type: string
+      example:
+        board: your board
+    DeleteBoardRequest:
+      title: DeleteBoardRequest
+      required:
+        - board
+      type: object
+      properties:
+        board:
+          type: string
+      example:
+        board: board name
+tags:
+  - name: Auth
+  - name: Tasks
+  - name: User
+  - name: KanbanBoard
