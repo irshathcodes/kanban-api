@@ -4,7 +4,7 @@ info:
   contact: {}
   version: "1.0"
 servers:
-  - url: https://kanban-board-api.up.railway.app/api
+  - url: https://kanban-api-edr9.onrender.com/api
     variables: {}
 paths:
   /auth/login:
