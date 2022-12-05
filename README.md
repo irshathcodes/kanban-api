@@ -1,30 +1,22 @@
-
 # Kanban Api
 
 A simple task manager api to keep track of your day-to-day tasks and complete them.
 
-link to production server: [kanban api](kanban-board-api.up.railway.app)
-
-
-
+link to production server: [kanban api](https://kanban-api.cyclic.app/)
 
 ## Tech Stack
 
 Node, Express, MongoDB with Mongoose
 
-
-
 ## Documentation
 
-[Documentation](https://kanban-board-api.up.railway.app/api-docs/)
-
+[Documentation](https://kanban-api.cyclic.app/api-docs/)
 
 ## Features
 
 - HTTP only cookie based authentication
 - swagger api docs
 - flexible schema
-
 
 ## Environment Variables
 
@@ -43,13 +35,10 @@ To run this project, you will need to add the following environment variables to
 
 `NODE_ENV` - development or production
 
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-
 ## Feedback
 
 If you have any feedback/suggestions, please reach out to me at [@irshathcodes](https://twitter.com/irshathcodes)
-
